@@ -1,0 +1,14 @@
+description "Material Symbols SVG Extractor\377";
+
+uses
+	CtrlLib,
+	Painter,
+	plugin/z,
+	StageCard;
+
+file
+	main.cpp;
+
+mainconfig
+	"" = "GUI";
+
