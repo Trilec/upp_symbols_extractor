@@ -12,13 +12,14 @@ Purpose
         • materialsymbolsrounded
         • materialsymbolssharp
   - Drive filtering via an external JSON metadata file:
-        • metadata style:
+        • metadata style (e.g. material_symbols_metadata.json under symbols/):
               { "icons": [ { "name": "...", "categories": ["alert", ...] }, ... ] }
-          or arrays/maps under "icons"/"glyphs"/"symbols"/"items".
+          or arrays/maps under "icons"/"glyphs"/"symbols"/"items"
+          with no category folders on disk.
         • compact update/current_versions.json style:
               { "alert::add_alert": 17, "symbols::zoom_out_map": 329, ... }
           where the prefix before "::" is treated as the category.
-  - Emit ONE header per logical JSON category:
+  - Emit ONE header per logical JSON category (normalized to snake_case):
         icons_<category>.h   e.g.  icons_alert.h, icons_content.h, ...
 
         namespace <category> {
@@ -106,9 +107,11 @@ Optional helpers
 Change log
   - v0.30.0
       • Switched to per-category headers (icons_<category>.h) driven
-        by JSON metadata.
+        by JSON metadata under symbols/.
       • Unified support for both metadata-style JSON and compact
-        current_versions.json.
+        update/current_versions.json-style maps.
+      • Normalized JSON category labels to snake_case names for UI and
+        header namespaces (e.g. audio_video, ui_action, image, map).
       • Added global "Limit Categories" and "Limit Icons" controls.
       • Added warnings for JSON icons that do not exist under symbols/web.
       • Added optional coverage check helper (see "Check" and "Check Meta").
@@ -817,14 +820,8 @@ public:
         status.Transparent(false);
         status.Tip("Append-only log of extractor actions.");
         
-        
-      
-
-		headerCard.AddFixed(  
-		    status.HSizePos(DPI(10), DPI(10))
-		          .VSizePos(DPI(280), DPI(10))   // top = statusTop, bottom = 10  
-		);
-
+		headerCard.AddFixed(
+		    status.HSizePos(DPI(10), DPI(10))  .VSizePos(DPI(280), DPI(10))		);
 
         browseIn << [=]{
             FileSel fs;
